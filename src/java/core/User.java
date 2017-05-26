@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -21,16 +22,12 @@ public class User {
     @Id
     Long id;
     String username;
-    ArrayList<String> list;
-    transient String passwordHash;
+    transient HttpSession session = null;
+    transient String sessionId;
+    transient String facebookSecret;
     
     public User(String username) {
         this.username = username;
-        list = new ArrayList<>();
-        list.add("asd");
-        list.add("asd1");
-        list.add("asd2");
-        this.passwordHash = "dada";
     }
 
     public String getUsername() {
@@ -44,6 +41,11 @@ public class User {
     public Long getId()
     {
         return id;
+    }
+    
+    public void startSession()
+    {
+        
     }
     
 }

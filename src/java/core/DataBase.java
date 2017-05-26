@@ -6,6 +6,7 @@
 package core;
 
 import java.util.*;
+import javax.annotation.PostConstruct;
 
 /**
  *
@@ -15,7 +16,13 @@ public class DataBase {
     
     static Map<String, User> userMap = new HashMap<>();
     //Map<String, Resource> resourceMap = new HashMap<>();
-    
+    @PostConstruct
+    public void init() {
+        System.err.println("Am trecut pe aici.\n\n\n\n\n\n\n");
+        userMap.put("post", new User("post"));
+        userMap.put("Andreea", new User("Ada ada"));
+    // ...
+    }
     
     
 }

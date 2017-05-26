@@ -8,17 +8,25 @@ package core;
  *
  * @author alexandru
  */
+
 public class Application {
     
     public static void main(String args[])
     {
-        //System.err.println(" ++++++++++++++++\n+++++++++++++++++++++ ++++++++\n+++++++++++++++++++++ ++++++++\n+++++++++++++++++++++ ++++++++\n+++++++++++++++++++++ ++++++++\n+++++++++++++++++++++ ");
+
+
     }
     
 }
 
 
-
 /**
- * Counted plates ?? Is the movie accurate?
+ * cum facem login-ul? Sesiunea? Cum o tinem deschisa?
+ * token-ul de sesiune... ?
+ * cookie?
+ * single sign on. oaath
  */
+
+
+
+
