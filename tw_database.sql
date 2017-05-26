@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users
     PRIMARY KEY(id_user)
 );
 
+
 CREATE TABLE IF NOT EXISTS resources
 (
     id_resource VARCHAR(100) NOT NULL,

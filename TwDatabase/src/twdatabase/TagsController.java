@@ -15,15 +15,16 @@ import java.sql.Statement;
  *
  * @author ada
  */
-public class ResourceController {
-       public void add_resource(String id_resource, Date created_at, String resource_type) throws SQLException {
+public class TagsController {
+    
+    public void add_tag(String id_resource, String tag) throws SQLException {
         Connection con = Database.getConnection();
         Statement st = con.createStatement();
-        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_resource,created_at, resource_type)\n"
+        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_resource,tag)\n"
                 + "    VALUES (?,?,?,?,?,?);")) {
             pstmt.setString(1, id_resource);
-            pstmt.setDate(2, created_at);
-            pstmt.setString(3, resource_type);
+            pstmt.setString(2, tag);
+           
 
             pstmt.executeUpdate();
 
