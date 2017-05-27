@@ -34,3 +34,13 @@ CREATE TABLE IF NOT EXISTS resources_users
 ALTER TABLE resources ADD COLUMN path varchar(50);
 UPDATE resources SET path = '/';    -- Just a silly example
 ALTER TABLE resources ALTER COLUMN path SET NOT NULL;
+/
+CREATE TRIGGER delete_resource
+   after delete  ON resources
+    FOR EACH ROW
+    BEGIN
+    delete from resources_users where id_resource=old.id_resource;
+
+end;
+ALTER TABLE resources ADD COLUMN title varchar(50);
+alter table resources add column location varchar(50);

@@ -5,36 +5,19 @@
  */
 package twdatabase;
 
-import com.sun.corba.se.spi.activation.LocatorOperations;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  *
  * @author ada
  */
-public class ResourceController {
-
-    public void add_resource(Resource resource) throws SQLException {
-        Connection con = Database.getConnection();
-        Statement st = con.createStatement();
-        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_resource,created_at, resource_type)\n"
-                + "    VALUES (?,?,?,?,?,?);")) {
-            pstmt.setString(1, resource.getIdResource());
-            pstmt.setDate(2, resource.getDateCreated());
-            pstmt.setString(3, resource.getResourceType());
-
-            pstmt.executeUpdate();
-
-        }
-    }
-
-    public ArrayList<Resource> getResourcesByExactPath(String path) throws SQLException {
+public class DatabaseController {
+    public static ArrayList<Resource> getResourcesByExactPath(String path) throws SQLException {
         Connection con = Database.getConnection();
         path = "'" + path + "'";
         path = path.toLowerCase();
@@ -64,7 +47,7 @@ public class ResourceController {
      * @return
      * @throws SQLException
      */
-    public ArrayList<Resource> getResourcesByPath(String path) throws SQLException {
+    public static ArrayList<Resource> getResourcesByPath(String path) throws SQLException {
         Connection con = Database.getConnection();
         path = "'%" + path + "%'";
         path = path.toLowerCase();
@@ -89,7 +72,7 @@ public class ResourceController {
         return resources;
     }
 
-    public ArrayList<Resource> getResourcesByDate(Date date) throws SQLException {
+    public static ArrayList<Resource> getResourcesByDate(Date date) throws SQLException {
         Connection con = Database.getConnection();
 
         ArrayList<Resource> resources = new ArrayList<>(100);
@@ -109,7 +92,7 @@ public class ResourceController {
         return resources;
     }
 
-    public ArrayList<Resource> getResourcesByTitle(String title) throws SQLException {
+    public static ArrayList<Resource> getResourcesByTitle(String title) throws SQLException {
         Connection con = Database.getConnection();
         title = "'%" + title + "%'";
         title = title.toLowerCase();
@@ -130,7 +113,7 @@ public class ResourceController {
         return resources;
     }
 
-    public ArrayList<Resource> getResourcesByExactTitle(String title) throws SQLException {
+    public static ArrayList<Resource> getResourcesByExactTitle(String title) throws SQLException {
         Connection con = Database.getConnection();
         title = "'" + title + "'";
         title = title.toLowerCase();
@@ -151,7 +134,7 @@ public class ResourceController {
         return resources;
     }
 
-    public ArrayList<Resource> getResourcesByExactLocation(String location) throws SQLException {
+    public static ArrayList<Resource> getResourcesByExactLocation(String location) throws SQLException {
         Connection con = Database.getConnection();
         location = "'" + location + "'";
         location = location.toLowerCase();
@@ -172,7 +155,7 @@ public class ResourceController {
         return resources;
     }
 
-    public ArrayList<Resource> getResourcesByLocation(String location) throws SQLException {
+    public static ArrayList<Resource> getResourcesByLocation(String location) throws SQLException {
         Connection con = Database.getConnection();
         location = "'%" + location + "%'";
         location = location.toLowerCase();
@@ -192,7 +175,7 @@ public class ResourceController {
 
         return resources;
     }
-     public ArrayList<Resource> getResourcesByAdvancedSearch(String title,String tag,String location, Date date) throws SQLException {
+     public static ArrayList<Resource> getResourcesByAdvancedSearch(String title,String tag,String location, Date date) throws SQLException {
         Connection con = Database.getConnection();
         location = "'%" + location + "%'";
         location = location.toLowerCase();
@@ -214,5 +197,29 @@ public class ResourceController {
 
         return resources;
     }
+     public static ArrayList<Resource> getResourcesByTag(String tagString) throws SQLException
+    {
+        
+         Connection con = Database.getConnection();
+        tagString = "'" + tagString + "'";
+        tagString = tagString.toLowerCase();
+        ArrayList<Resource> resources = new ArrayList<>(100);
+        try (PreparedStatement pstmt = con.prepareStatement("select id_resource from resources_tags where lower(tag)=?")) {
 
+            pstmt.setString(1, tagString);
+
+            ResultSet rs1, rs2 = null;
+            rs1 = pstmt.executeQuery();
+            while (rs1.next()) {
+
+                try (PreparedStatement pstmt2 = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where id_resource like ?")) {
+
+                    pstmt2.setString(1, "'%" + rs1.getString("id_resource") + "%'");
+                    rs2 = pstmt2.executeQuery();
+                    resources.add(new Resource(rs2.getString("id_resource"), rs2.getDate("created_at"), rs2.getString("resource_type"), rs2.getString("path"), rs2.getString("title"), rs2.getString("location")));
+                }
+            }
+        }
+        return resources;
+    }
 }

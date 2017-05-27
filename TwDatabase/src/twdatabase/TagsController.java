@@ -30,4 +30,9 @@ public class TagsController {
 
         }
     }
+    public Resource[] getResourcesByExactTag(String tagString)
+    {
+        
+        return null;
+    }
 }
