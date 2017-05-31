@@ -18,7 +18,7 @@ import java.sql.Statement;
  */
 public class UserController {
 
-    public void add_user(String id_user, String name, String profile_image_url, Date birthday, String school, String session_id) throws SQLException {
+    public static void addUser(String id_user, String name, String profile_image_url, Date birthday, String school, String session_id) throws SQLException {
         Connection con = Database.getConnection();
         Statement st = con.createStatement();
         try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_user,name,profile_image_url,birthday,school,session_id)\n"
@@ -29,6 +29,7 @@ public class UserController {
             pstmt.setDate(4, birthday);
             pstmt.setString(5, school);
             pstmt.setString(6, session_id);
+            System.out.println("am ajuns aici la user");
 
             pstmt.executeUpdate();
 

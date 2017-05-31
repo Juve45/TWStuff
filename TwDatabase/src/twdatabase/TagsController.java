@@ -17,7 +17,7 @@ import java.sql.Statement;
  */
 public class TagsController {
     
-    public void add_tag(String id_resource, String tag) throws SQLException {
+    public static void addTag(String id_resource, String tag) throws SQLException {
         Connection con = Database.getConnection();
         Statement st = con.createStatement();
         try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_resource,tag)\n"
@@ -30,9 +30,5 @@ public class TagsController {
 
         }
     }
-    public Resource[] getResourcesByExactTag(String tagString)
-    {
-        
-        return null;
-    }
+    
 }

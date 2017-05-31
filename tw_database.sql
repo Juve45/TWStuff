@@ -44,3 +44,7 @@ CREATE TRIGGER delete_resource
 end;
 ALTER TABLE resources ADD COLUMN title varchar(50);
 alter table resources add column location varchar(50);
+
+ALTER TABLE resources RENAME url TO data_path;
+/
+alter table resources add column url varchar(100);
