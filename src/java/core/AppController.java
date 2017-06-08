@@ -1,4 +1,5 @@
 package core;  
+import java.util.ArrayList;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.ui.*;
@@ -39,12 +40,11 @@ public class AppController {
      * @param resId - This is the userId for which we request the information
      * @return A JSON with the data model of the specific resource.
      */
-    @RequestMapping(value = "/API/resource/{resId}", method = RequestMethod.GET)  
-    public @ResponseBody Model resolveResourceGet(Model m, @PathVariable String resId) { 
+    @RequestMapping(value = "/API/resource/{resPath}", method = RequestMethod.GET)  
+    public @ResponseBody String resolveResourceGet(Model m, @PathVariable String resPath) { 
         User alex= new User("asdf");
-        m.addAttribute("sfa", "mfasaaa");
-        
-        return m;
+        ArrayList<Resource> ans;
+        return null;
     }  
     
     /**

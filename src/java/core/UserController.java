@@ -5,7 +5,7 @@
  */
 package core;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import java.util.HashMap;
 
 /**
@@ -16,6 +16,7 @@ public class UserController {
     
     public String getViewAsString(String username)
     {
+        /*
         Gson g = new Gson();
         User user = new DataBaseController().getUserByName(username);
         String ans;
@@ -25,7 +26,8 @@ public class UserController {
             ans = g.toJson(err);
         else ans = g.toJson(user);
         System.out.println(ans);
-        return ans;
+        return ans;*/
+        return  "e ok";
     }
     
     

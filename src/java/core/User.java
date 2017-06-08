@@ -5,6 +5,7 @@
  */
 package core;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.persistence.Entity;
@@ -19,33 +20,67 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class User {
-    @Id
-    Long id;
-    String username;
+   @Id
+           String id;
+String username;
+   
+    
     transient HttpSession session = null;
     transient String sessionId;
     transient String facebookSecret;
     
-    public User(String username) {
-        this.username = username;
-    }
+    
+String profile_image_url;
+Date birthdate;
+String school;
 
-    public String getUsername() {
+/**
+ * 
+ * @param id
+ * @param username
+ * @param profile_image_url
+ * @param birthdate
+ * @param school
+ * @param session_id 
+ */
+    public User(String id, String username, String profile_image_url, Date birthdate, String school, String sessionId) {
+        this.id = id;
+        this.username = username;
+        this.profile_image_url = profile_image_url;
+        this.birthdate = birthdate;
+        this.school = school;
+        this.sessionId =sessionId;
+    }
+    /**
+     * 
+     * @return 
+     */
+    public String getUsename() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getSessionId() {
+        return sessionId;
     }
-    
-    public Long getId()
-    {
+
+    public String getSchool() {
+        return school;
+    }
+
+    public String getProfile_image_url() {
+        return profile_image_url;
+    }
+
+    public String getId() {
         return id;
     }
-    
-    public void startSession()
-    {
-        
+
+    public Date getBirthdate() {
+        return birthdate;
     }
+
+    
+    
+   
     
 }

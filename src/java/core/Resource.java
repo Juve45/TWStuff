@@ -5,88 +5,136 @@
  */
 package core;
 
+import java.sql.Date;
+
 /**
  *
  * @author alexandru
  */
 public class Resource {
+/**
+ * 
+ */
+    String idResource;
     /**
-     * Name of the resource
+     * 
      */
-    private String name;
+    String location;
+    /**
+     * 
+     */
+    String name;
+   /**
+    * 
+    */
+    Date createdAt;
+    /**
+    * 
+    */
+    String type;
+    /**
+    * 
+    */
+    String path;
+    /**
+    * 
+    */
+    String idUser;
+    /**
+    * 
+    */
+    String dataPath;
+    /**
+    * 
+    */
+    
     
     /**
-     * The theoretical path of the resource (the path displayed in browser
-     * when a user tries to access it).
-     */
-    private String path;
-    
-    /**
-     * Folder, Image, Video, Document
-     */
-    private String type;
-    
-    /**
-     * The link to the resource on server(image, video, etc)
-     * If the resource is a folder, this field will be ignored.
-     */
-    private String dataPath;
-
-    public Resource(String name, String path) {
-        this.name = name;
-        this.path = path;
-    }
-
-    public Resource() {
-    }
-
-    
-    /**
-     * This is the basic constructor
-     * @param name The name of the Resource 
-     * @param path
+     * 
+     * @param idResource
+     * @param createdAt
      * @param type
-     * @param dataPath
-     * 
+     * @param path
+     * @param name
+     * @param location
+     * @param idUser
+     * @param dataPath 
      */
-    public Resource(String name, String path, String type, String dataPath) {
-        this.name = name;
-        this.path = path;
-        this.type = type;
-        this.dataPath = dataPath;
+    public Resource(String idResource, Date createdAt, String type, String path, String name,String location,String idUser, String dataPath) {
+        this.idResource=idResource;
+        this.createdAt=createdAt;
+        this.type=type;
+        this.path =path;
+        this.location=location;
+        this.name=name;
+        this.idUser=idUser;
+        this.dataPath=dataPath;
     }
-    
     /**
      * 
      * @return 
      */
-    public String getName() {
-        return name;
+    public String getIdResource()
+    {
+        return this.idResource;
     }
-    
     /**
      * 
      * @return 
      */
-    public String getPath() {
-        return path;
+    public String getIdUser()
+    {
+        return this.idResource;
     }
-    
     /**
-     * <code>Set</code> sets the name of this resource
-     * @param name the name that will be set
+     * 
+     * @return 
      */
-    public void setName(String name) {
-        this.name = name;
+     public String getName()
+    {
+        return this.name;
+    }
+     /**
+      * 
+      * @return 
+      */
+      public String getLocationResource()
+    {
+        return this.location;
+    }
+      /**
+       * 
+       * @return 
+       */
+      public Date getDateCreated()
+    {
+        return this.createdAt;
+    }
+      /**
+       * 
+       * @return 
+       */
+        public String getResourceType()
+    {
+        return this.type;
+    }
+        /**
+         * 
+         * @return 
+         */
+         public String getPath()
+    {
+        return this.path;
+    }
+         /**
+          * 
+          * @return 
+          */
+          public String getDataPath()
+    {
+        return this.dataPath;
     }
 
-    /**
-     * 
-     * @param path 
-     */
-    public void setPath(String path) {
-        this.path = path;
-    }
-    
-    
+         
 }
+
