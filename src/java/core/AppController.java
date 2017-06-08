@@ -1,5 +1,13 @@
 package core;  
+import vimeo.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +17,6 @@ import org.springframework.web.servlet.*;
 
 @RestController
 public class AppController {
-    
     
     
     /**
@@ -59,6 +66,29 @@ public class AppController {
         return attr.getRequest().getSession(create); 
     }
     
+    /**
+     * This should init the server
+     * @throws Exception 
+     */
+    @PostConstruct
+	public void initIt() {
+        try {
+            Properties prop = new Properties();
+            prop.load(new FileInputStream(new File("/home/alexandru/Documents/Fac/TW/BackEndServer/src/conf/config.properties")));
+            String path = prop.getProperty("path");
+            System.out.println("Init method after properties are set : " + path);
+            
+            
+            
+            
+            Vimeo vimeo = new Vimeo("052bd593b477a5e4b401056a289864b6");
+            VimeoResponse vr = vimeo.getVideos();
+            System.out.println(vr.toString());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
     

@@ -17,6 +17,7 @@ import core.*;
  * @author ada
  */
 public class DatabaseController {
+    
     public static ArrayList<Resource> getResourcesByExactPath(String path) throws SQLException {
         Connection con = Database.getConnection();
         path = "'" + path + "'";

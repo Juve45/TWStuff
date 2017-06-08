@@ -1,5 +1,5 @@
  <!DOCTYPE html>
-    <html>
+    
     <head>
       <meta charset="utf-8">
       <title>
@@ -13,6 +13,44 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="/resources/demos/external/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script>
+$(function() {
+
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+
+  $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+
+          var input = $(this).parents('.input-group').find(':text'),
+              log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+          if( input.length ) {
+              input.val(log);
+          } else {
+              if( log ) alert(log);
+          }
+
+      });
+  });
+  
+});
+
+</script>
+<script>
+    $(function() {
+        $('#spinner').spinner({
+            min: 1,
+            max: 31,
+            step: 1
+        });
+    });
+</script>
 
     </head>
          <div class="row">
@@ -78,47 +116,13 @@
         <center><button type="button" class="btn btn-info">Upload</button></center>
         </div>
         <br>
-</html>
+        
+        <button class="btn btn-default">
+            <a href = "https://api.vimeo.com/oauth/authorize?client_id=67ad6df17d16051fcd58414af180d6a85c2f0c6d&response_type=code&redirect_uri=http://localhost:8080/BackEndServer/page/add&state=XXXXXX">
+            <img src=${root+ "/img/vimeo.png"} width="100" > From Vimeo!
+            </a>
+</button>
+        
 
 
 
-
-<script>
-$(function() {
-
-  $(document).on('change', ':file', function() {
-    var input = $(this),
-        numFiles = input.get(0).files ? input.get(0).files.length : 1,
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-    input.trigger('fileselect', [numFiles, label]);
-  });
-
-
-  $(document).ready( function() {
-      $(':file').on('fileselect', function(event, numFiles, label) {
-
-          var input = $(this).parents('.input-group').find(':text'),
-              log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-          if( input.length ) {
-              input.val(log);
-          } else {
-              if( log ) alert(log);
-          }
-
-      });
-  });
-  
-});
-
-<script>
-    $(function() {
-        $('#spinner').spinner({
-            min: 1,
-            max: 31,
-            step: 1
-        });
-    });
-</script>
-
-</script>
