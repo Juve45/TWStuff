@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
-
+import javax.ws.rs.core.UriBuilder;
 /**
  *
  * @author ada
@@ -18,7 +18,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class post {
       private final String USER_AGENT = "Mozilla/5.0";
     private void sendPost() throws Exception {
+ UriBuilder builder = new UriBuilder() ;
+    builder.setScheme("http").setHost(host).setPort(port).setPath(restPath + taskUri + "/" + taskId)
+    .setParameter("parts", "all")
+    .setParameter("params", routingOptionsJson)
+    .setParameter("action", "finish");
 
+    HttpPost post = getHttpPostMethod(builder.build());
 		String url = "https://selfsolve.apple.com/wcResults.do";
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();

@@ -8,7 +8,7 @@ package postgetapi;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 
 /**
  *
@@ -18,8 +18,8 @@ public class get {
      private final String USER_AGENT = "Mozilla/5.0";
 
 	public void sendGet() throws Exception {
-
-		String url =  "https://graph.facebook.com/v2.9/me?fields=id%2Cname&access_token=EAAI9H1BL6u8BAGMsxYVshVhTAtAAkN3nINUtrGM8WjSQVLZBCDLE6XDKC2aZAiIN6uzSOTZArZCd9mx6bEH3lZAE7JK9gENNQZBSVCQdIGQjn1i0Rh7UUkaoXdOYf8UFRAunTcf3aioPGl6jtAoYoGQNvNIwQw5gmrjZBWrTkK3DpVlHeiKaXdZBTFUo7yr5RtoZD";
+       
+		String url =  "";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
