@@ -1,0 +1,166 @@
+#header 
+{
+  border-radius: 10px;
+  border: solid 3px grey;
+  width: 100%;
+  height: 70px;
+  /*line-height: 50px;*/
+  color: white;
+  background-color: #2a363a;  
+  top: 0;
+  left: 0;
+  float:left;
+  display: inline-block;
+}
+#bara_cautare{
+	 width: 45%;
+     margin: 0 auto;/*aici am centrat bara de cautare*/
+}
+
+#form-control
+{
+	display: none;
+}
+#form-control:hover
+{
+	display: inline;
+}
+
+
+#div_form_buton{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#logout{
+	float: right;
+}
+#buton{  
+  background-repeat: no-repeat;
+  background-size:10px 10px;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+  border:none;
+  font-size:10px;
+  background-color: transparent;
+}
+
+.cl_div_header{
+  position:relative;
+  float:left;
+  margin-left:5%;
+}
+
+#content {
+  background-color: lightgrey;
+  float:left;
+  width: 100%;
+
+}
+#meniu_vertical_stanga{
+	border-radius: 7px;
+  width: 100px;
+  color: black;
+  background-color: #2a363a;  
+	float:left;
+}
+
+.vertical-menu a {
+  	
+  	margin: 2px 2px 2px 2px;
+    /*background-color: #2a363a;  Grey background color */
+    color: lightgrey; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+  	border-radius: 7px;
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: grey; /* Add a green color to the "active/current" link */
+    color: black;
+}
+
+.type1 {
+  border-radius: 10px;
+	width: 200px;
+	position: relative;
+	float: left;
+	margin: 5px 10px 5px 10px;
+	border: 1px solid black;
+	transition: width 1s, float 1s;
+	transform: translate3d(0px, 0px, 0px);
+	background-color: lightgrey;
+}
+#ani{
+	float:right;
+	width: auto;
+	height: auto;
+}
+
+#container
+{
+	background-color: lightblue;
+	border: 3px solid red;
+  border-radius: 10px;
+	width: 100px;/*aici era auto*/
+	height: 100px;/*aici era auto*/
+	float:left;
+	transition: width 1s, background-color 1s, height 1s;
+}
+
+@media (max-width: 700px), (max-device-width: 700px){
+	.type1 {
+		width: 25%;
+	}
+
+	#container
+	{
+		width: 98%;
+		background-color: lightgreen;
+	}
+}
+
+@media (max-width: 400px), (max-device-width: 400px){
+	.type1 {
+		width: 40%;
+	}
+
+	#container
+	{
+		width: 98%;
+		background-color: lightgreen;
+	}
+
+}
+
+
+.input-group:hover
+{
+	max-width: 500px;
+}
+
+.input-group
+{
+	max-width: 0px;
+	transition: width 1s, max-width 1s;
+}
+
+.panel-default
+{
+	float:left;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+div{
+
+	/*border: 1px solid black;
+	margin: 1px 1px 1px 1px;
+	*/
+}

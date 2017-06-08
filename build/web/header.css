@@ -1,0 +1,99 @@
+
+#header {
+  z-index: 2;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  line-height: 50px;
+  color: black;
+  background-color: #E2EFF7;
+  
+  top: 0;
+  left: 0;
+  display: flex;
+
+}
+
+
+#input_search
+{
+
+    line-height: 50px;
+    width:150px;
+    height:30px;
+    padding-left:15px;
+    border-radius:6px;
+    border:none;
+    font-weight:500;
+    background-color:white;   
+    transition: width 0.4s ease-in-out;
+
+}
+#input_search:focus {
+    width: 70%;
+}
+#sigla{
+  }
+
+#div_form_buton{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+#buton{
+    
+    background-repeat: no-repeat;
+    background-size:10px 10px;
+    border:none;
+    cursor:pointer;
+    border-radius:6px;
+    border:none;
+    font-size:10px;
+    background-color: transparent;
+}
+.cl_div_header{
+  position:relative;
+  float:left;
+  margin-left:5%;
+}
+
+#content {
+  position: absolute;
+  height: 100%;
+  width:100%;
+  background-color: black;
+  left:0;
+  top:0;
+
+}
+#meniu_vertical_stanga{
+  position: fixed;
+  /*z-index: 1;*/
+ 
+  height: 100%;
+  width: 10%;
+  color: black;
+  background-color: #FFE4C4;
+  
+ float:left;
+}
+.vertical-menu {
+    width: 2000px; 
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: pink; /* Add a green color to the "active/current" link */
+    color: white;
+}
