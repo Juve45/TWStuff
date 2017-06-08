@@ -38,5 +38,13 @@ public class DataBaseController {
     }
     
     
+    public Resource[] getResourceByExactPath(String path)
+    {
+        return null;
+    }
+    
+    
+    
+    
     
 }

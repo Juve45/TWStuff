@@ -21,7 +21,7 @@ public class AppController {
      * @param userId - This is the userId for which we request the information
      * @return A JSON with the data model of the specific user.
      */
-    @RequestMapping(value = "/API/user/{userId}", method = RequestMethod.GET)  
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)  
     public @ResponseBody String resolveUserGet(Model m, @PathVariable String userId) { 
         HttpSession s = session(false);
         if(s == null) 
