@@ -54,8 +54,8 @@ public class PostGetApi extends HttpServlet {
 		out.println("<h1>Facebook Login using Java</h1>");
 		out.println("<h2>Application Main Menu</h2>");
 		out.println("<div>Welcome "+fbProfileData.get("first_name"));
-		out.println("<div>Your Email: "+fbProfileData.get("email"));
-		out.println("<div>You are "+fbProfileData.get("gender"));		
+		//out.println("<div>Your Email: "+fbProfileData.get("email"));
+		//out.println("<div>You are "+fbProfileData.get("gender"));		
 	}
 
 }

@@ -25,7 +25,7 @@ import java.net.URLEncoder;
 public class fbConnection {
 	public static final String fb_APP_ID = "630154653854447";
 	public static final String fb_APP_SECRET = "9d01262093e875c8554f1c8fdc35aa7e";
-	public static final String REDIRECT_URI = "https://localhost";
+	public static final String REDIRECT_URI = "http://localhost:8080/Loginul_vietii_2/login";
 
 	static String accessToken = "";
 
@@ -39,6 +39,7 @@ public class fbConnection {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+                System.out.println("\n\n\n\n ============(*&^=================" + fbLoginUrl);
 		return fbLoginUrl;
 	}
 
@@ -81,13 +82,14 @@ public class fbConnection {
 				throw new RuntimeException("Unable to connect with Facebook "
 						+ e);
 			}
-
+ System.out.println("[%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&%%"+accessToken+"%%%]");
 			accessToken = b.toString();
 			if (accessToken.startsWith("{")) {
 				throw new RuntimeException("ERROR: Access Token Invalid: "
-						+ accessToken);
+					+ accessToken);
 			}
 		}
+                System.out.println("[%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"+accessToken+"%%%]");
 		return accessToken;
 	}
 }
