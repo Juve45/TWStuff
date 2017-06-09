@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
 
         <base href=${root + "/web"}>
-        <link rel="stylesheet" type="text/css" href="style2.css">
+              <link rel="stylesheet" type="text/css" href="style2.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!--script src="jquery.min.js"></script-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -40,9 +40,12 @@
 
 
                 <div class="col-lg-2 col-md-2 col-xs-2">
-                    <button type="button" class="btn btn-default" aria-label="Right Align">
+                    <!--button class="btn glyphicon"-->
+                             <img src="${pic}" class="img-rounded" alt="Profile pic" style="width:36px">
+                    <!--/button-->
+                    <!--button type="button" class="btn btn-default" aria-label="Right Align">
                         <span class="glyphicon glyphicon-user"></span>
-                    </button>
+                    </button-->
                     <span id="user">${user}</span>
                 </div>
 
@@ -105,7 +108,7 @@
                     <div class="panel-heading" id="main-frame">
 
                         <!-- Editable space ^^ -->
-                        
+
                         <#include page>
                         <!-- End of editable space ^^ -->
 

@@ -118,7 +118,7 @@ $(function() {
         <br>
         
         <button class="btn btn-default">
-            <a href = "https://api.vimeo.com/oauth/authorize?client_id=67ad6df17d16051fcd58414af180d6a85c2f0c6d&response_type=code&redirect_uri=http://localhost:8080/BackEndServer/page/add&state=XXXXXX">
+            <a href = "https://api.vimeo.com/oauth/authorize?client_id=67ad6df17d16051fcd58414af180d6a85c2f0c6d&response_type=code&redirect_uri=http://localhost:8080/BackEndServer/API/vimeo&state=XXXXXX">
             <img src=${root+ "/img/vimeo.png"} width="100" > From Vimeo!
             </a>
 </button>
