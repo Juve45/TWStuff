@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author alexandru
+ * @author ada
  */
 public class Resource {
     
@@ -40,7 +40,7 @@ public class Resource {
     // java.sql.Date
     private Date createdAt;
     
-    
+    private String location;
     
     //old
     
@@ -62,6 +62,19 @@ public class Resource {
         this.type = type;
         this.dataPath = dataPath;
     }
+
+    public Resource(String id, String idUser, String name, String path, String type, String dataPath, Date createdAt, String location) {
+        this.id = id; 
+        this.idUser = idUser;
+        this.name = name;
+        this.path = path;
+        this.type = type;
+        this.dataPath = dataPath;
+        this.createdAt = createdAt;
+        this.location = location;
+   
+    }
+    
     
     /**
      * 
@@ -110,6 +123,38 @@ public class Resource {
     public String getDataPath() {
         return dataPath;
     }
+    public String getLocation(){
+        return location;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+    
     
     
 }
