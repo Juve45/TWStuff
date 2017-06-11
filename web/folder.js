@@ -74,7 +74,7 @@ $(function(){
       $("#main-row").append(tmp);
     });
 });
-
+/*
 //adauga elemente pe pagina de la advandced search
 $(function(){
     	
@@ -82,6 +82,12 @@ $(function(){
       $("#main-row-search").load("home.html");
     });
 });
+
+*/
+
+function loadSearch() {
+      $("#main-row-search").load("home.html");
+}
 
 
 

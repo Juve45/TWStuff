@@ -20,33 +20,57 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class User {
     @Id
-    String id;
-    
-    String username;
+    String fbId;
+    String picURL;
+    String name;
     transient HttpSession session = null;
-    transient String sessionId;
+    //transient String sessionId;
     transient String facebookSecret;
     
-    public User(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public User(String userName) {
+        name = userName;
     }
     
-    public String getId()
+    public User(String userName, String pic) {
+        name = userName;
+        picURL = pic;
+    }
+
+    
+    public User(String Id, String userName, String pic) {
+        fbId = Id;
+        name = userName;
+        picURL = pic;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String userName) {
+        name = userName;
+    }
+    
+    public String getFbId()
     {
-        return id;
+        return fbId;
     }
     
     public void startSession()
     {
         
     }
+
+    public String getPicURL() {
+        return picURL;
+    }
+
+    public void setPicURL(String picURL) {
+        this.picURL = picURL;
+    }
+    
+    
+    
+    
     
 }

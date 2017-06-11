@@ -7,6 +7,7 @@ package template;
 
 import commons.Resource;
 import com.google.gson.Gson;
+import commons.User;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
@@ -16,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +27,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.client.methods.HttpGet;
 import session.SessionController;
 import static template.PageController.PATH;
 
@@ -33,8 +38,46 @@ import static template.PageController.PATH;
  */
 public class PageView {
     
-    Map root = new HashMap();
-       
+    
+    public static Configuration initCfg() throws IOException
+    {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
+        cfg.setDirectoryForTemplateLoading(new File(PATH));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        cfg.setLogTemplateExceptions(false);
+        return cfg;
+    }
+    
+    
+    static HashMap<String, Object> initMap() throws IOException
+    {
+        HashMap This = new HashMap<>();
+        
+        HttpSession hs = SessionController.session(false);
+        
+        This.put("root","/BackEndServer");
+        This.put("startPath", "/BackEndServer/page/home");
+        GetMethod pm = new GetMethod("http://localhost:8080/BackEndServer/API/user?session="+ PageController.sessionMap.get(hs.getId()));
+        System.out.println("session to send: " + PageController.sessionMap.get(hs.getId()));
+        HttpMethodParams params = new HttpMethodParams();
+        params.setParameter("session", "asd");//PageController.sessionMap.get(hs.getId()));
+        //params.setParameter("salut", PageController.sessionMap.get(hs.getId()));
+        pm.setParams(params);
+        System.out.println("Sesiunea: " + pm.getParams().getParameter("session"));
+        
+        HttpClient httpClient = new HttpClient();
+        System.out.println("URI: " + pm.getURI());
+        int resp = httpClient.executeMethod(pm);
+        String msg = pm.getResponseBodyAsString();
+        System.out.println("Am primit:" + msg);
+        if(msg.contains("unlucky"))
+            return null;
+        User x = new Gson().fromJson(msg, User.class);
+        This.put("user", x);
+        //System.out.println("Pic: " + x.getPicURL());
+        return This;
+    }
     
     /**
      * TOODO This is in PageView!!!!!!!!!
@@ -48,35 +91,13 @@ public class PageView {
     static String getHomeView(String path) throws IOException, MalformedTemplateNameException, TemplateException
     {
         System.out.println("HOME PAGE VIEW ===================== ");
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-        cfg.setDirectoryForTemplateLoading(new File(PATH));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
+        Configuration cfg;
+        cfg = initCfg();
         
-        HttpSession hs = SessionController.session(false);
-        Map root = new HashMap();
-       
-        System.out.println("Front end session in GetHomeView: " + hs.getId());
-        GetMethod pm = new GetMethod("http://localhost:8080/BackEndServer/API/user");
-        NameValuePair[] body = new NameValuePair[1];
-        System.out.println("session to send: " + PageController.sessionMap.get(hs.getId()));
-        body[0] = new NameValuePair("session", PageController.sessionMap.get(hs.getId()));
-        pm.setRequestBody(body);
-        
-        
-        HttpClient httpClient = new HttpClient();
-        int resp = httpClient.executeMethod(pm);
-        String msg = pm.getResponseBodyAsString();
-        if(msg.contains("unlucky"))
+        Map root = initMap();
+       if(root == null)
             return "Not Authorized!";
         Gson g = new Gson();
-        HashMap<String, String> hm = g.fromJson(msg, new HashMap<String, String>().getClass());
-        System.out.println(hm.get("name"));
-        root.put("user", hm.get("name"));
-        root.put("pic", hm.get("pic"));
-        root.put("root","/BackEndServer");
-        root.put("startPath", "/BackEndServer/page/home");
         Template temp = cfg.getTemplate("index.ftlh");
         
         ArrayList<String> navItem = new ArrayList<>();
@@ -118,12 +139,7 @@ public class PageView {
     static String getLoginView(String path) throws IOException, MalformedTemplateNameException, TemplateException
     {
         
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-        cfg.setDirectoryForTemplateLoading(new File(PATH));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-
+        Configuration cfg = initCfg();
               
         Map root = new HashMap();
         root.put("user", "home page");
@@ -138,6 +154,56 @@ public class PageView {
         temp.process(root, out);
         String s = out.toString();
         return s;
+    }
+    
+    
+    static String getProfileView(String path) throws IOException, TemplateException
+    {
+        Configuration cfg = initCfg();
+        
+        
+        Map root = initMap();
+        if(root == null)
+            return "Not Authorized!";
+        Template temp = cfg.getTemplate("index.ftlh");
+        ArrayList<String> navItem = new ArrayList<>();
+        String x[] = path.split("/");
+        for(int i=3; i < x.length; i++)
+        {
+            System.out.println("s: "+x[i]);
+            navItem.add(x[i]);
+        }
+        root.put("navItem", navItem);
+        System.out.println(root.get("user"));
+        Writer out = new StringWriter();
+        root.put("page", "profile.ftlh");
+        temp.process(root, out);
+        String s = out.toString();
+        return s;
+        
+    }
+    
+    static String getDefaultView(String path, String page) throws IOException, TemplateException
+    {
+        Configuration cfg = initCfg();
+        Map root = initMap();
+        if(root == null)
+            return "Not Authorized!";
+        Template temp = cfg.getTemplate("index.ftlh");
+        ArrayList<String> navItem = new ArrayList<>();
+        String x[] = path.split("/");
+        for(int i=3; i < x.length; i++)
+        {
+            System.out.println("s: "+x[i]);
+            navItem.add(x[i]);
+        }
+        root.put("navItem", navItem);
+        Writer out = new StringWriter();
+        root.put("page", page + ".ftlh");
+        temp.process(root, out);
+        String s = out.toString();
+        return s;
+        
     }
     
     static ArrayList<Resource> init()

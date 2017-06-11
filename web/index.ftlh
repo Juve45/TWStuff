@@ -41,12 +41,12 @@
 
                 <div class="col-lg-2 col-md-2 col-xs-2">
                     <!--button class="btn glyphicon"-->
-                             <img src="${pic}" class="img-rounded" alt="Profile pic" style="width:36px">
+                             <img src="${user.picURL}" class="img-rounded" alt="Profile pic" style="width:36px">
                     <!--/button-->
                     <!--button type="button" class="btn btn-default" aria-label="Right Align">
                         <span class="glyphicon glyphicon-user"></span>
                     </button-->
-                    <span id="user">${user}</span>
+                    <span id="user">${user.name}</span>
                 </div>
 
                 <div class="col-lg-1 col-md-2 col-xs-2">

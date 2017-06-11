@@ -44,7 +44,7 @@
 	<br>
 	<div class= "row row-eq-height">
             <br>
-  			<center><button type="button" class="btn btn-info" id="search-btn">Search</button></center>
+            <center><button onclick="loadSearch()" type="button" class="btn btn-info" id="search-btn" >Search</button></center>
   			<br><br>
      		</div><br>
      		<div class="row" id="main-row-search"></div>

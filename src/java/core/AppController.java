@@ -1,9 +1,13 @@
 package core;  
+import com.google.gson.Gson;
 import commons.*;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
+import facebook4j.Photo;
 import facebook4j.Picture;
+import facebook4j.ResponseList;
+import facebook4j.api.PhotoMethods;
 import facebook4j.auth.AccessToken;
 import vimeo.*;
 import java.io.File;
@@ -15,6 +19,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import org.apache.commons.httpclient.Header;
@@ -57,40 +62,51 @@ public class AppController {
      * Returnes a JSON that contains information about the requested user.
      * 
      * @param m - This models the params of the GET command
-     * @param userId - This is the userId for which we request the information
+     * @param sesId
      * @return A JSON with the data model of the specific user.
      */
-    @RequestMapping(value = "/user", method = RequestMethod.POST)  
-    public @ResponseBody String resolveUser(Model m, @RequestParam("session") String sesId) throws FacebookException { 
+    @RequestMapping(value = "/user", method = RequestMethod.GET)  
+    public @ResponseBody String resolveUser(HttpServletRequest request, @PathParam("session") String sesId) throws FacebookException { 
+        /*
         System.out.println("USER POST ============================== ");
-        //sesId = sesId.substring(8);
-        System.out.println("session recieved: " + sesId);
+        sesId = sesId.substring(8);
+        System.out.println(request.getRequestURI());
+        System.out.println("request session: " + request.getParameter("session"));
+        debug stuff
+        */
+        sesId = request.getParameter("session");
         HttpSession s = SessionController.findSessionById(sesId);
         if(s == null) 
             return "unlucky [aka Session not started]";
         
         String aToken = SessionController.getFbToken(sesId);
         
+        //facebook stuff
         Facebook fb = new FacebookFactory().getInstance();
         fb.setOAuthAppId("630154653854447", "9d01262093e875c8554f1c8fdc35aa7e");
-        fb.setOAuthPermissions("public_profile");
+        fb.setOAuthPermissions("public_profile, user_photos");
+        //aToken = "EAACEdEose0cBAPTlSxgwUNzkpw8barnTrfKZAb1JSjHlCDd5P2DC14Jt4E566eCyBYVODpvMLzbjGyt9Wfu1IcEvSeZCqe49EKrIQ5GYnU1sMM30KykS7yvvOW6pbzIJshXZBqogEdD2hopDdwJZCVSKF3e2GEv2smsV4tXpN6ZCRP7j2HBaSyIap4LDAahwZD";
         fb.setOAuthAccessToken(new AccessToken(aToken, null));
+        
+        
         facebook4j.User me = fb.getMe();
+        String userId = me.getId();
+        
+        
+        
+        ResponseList<Photo> r = fb.getUploadedPhotos();
+        System.out.println("Number of photos: " + r.size());
+        for(Photo p : r)
+        {
+            System.out.println("Photo -- " + p.getLink());
+        }
         
         System.out.println("A Token: " + aToken);
         System.out.println("user : " + me.getName());
         Picture pic = me.getPicture();
         URL url =fb.getPictureURL();
-        System.out.println("url: " + url.toString());
         
-        /*
-        User alex= new User("asdf");
-        m.addAttribute("sfa", "mfasaaa");
-        return new UserController().getViewAsString(sesId);
-        */
-        return "{\"name\" : \"" + me.getName() + "\","
-                + "\"pic\" : \"" + url.toString() + "\""
-                + "}";
+        return new UserView().getView(new User(me.getId(), me.getName(), url.toString()));
     }  
     
     /**
