@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package template;
+package commons;
+
+import java.sql.Date;
 
 /**
  *
  * @author alexandru
  */
 public class Resource {
+    
+    String id;
+    String idUser;
     /**
      * Name of the resource
      */
@@ -32,6 +37,13 @@ public class Resource {
      */
     private String dataPath;
 
+    // java.sql.Date
+    private Date createdAt;
+    
+    
+    
+    //old
+    
     public Resource(String name, String path) {
         this.name = name;
         this.path = path;

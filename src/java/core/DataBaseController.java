@@ -5,6 +5,8 @@
  */
 package core;
 
+import commons.User;
+
 /**
  *
  * @author alexandru

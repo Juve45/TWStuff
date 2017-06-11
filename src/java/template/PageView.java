@@ -5,6 +5,7 @@
  */
 package template;
 
+import commons.Resource;
 import com.google.gson.Gson;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;

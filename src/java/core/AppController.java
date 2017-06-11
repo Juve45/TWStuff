@@ -1,4 +1,5 @@
 package core;  
+import commons.User;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;

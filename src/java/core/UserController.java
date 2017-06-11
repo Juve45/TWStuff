@@ -5,6 +5,7 @@
  */
 package core;
 
+import commons.User;
 import com.google.gson.Gson;
 import java.util.HashMap;
 

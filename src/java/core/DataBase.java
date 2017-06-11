@@ -5,6 +5,7 @@
  */
 package core;
 
+import commons.User;
 import java.util.*;
 import javax.annotation.PostConstruct;
 
