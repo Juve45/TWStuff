@@ -5,6 +5,7 @@
  */
 package database;
 
+import commons.Resource;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -31,11 +32,11 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                try (PreparedStatement pstmt2 = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where id_resource like ?")) {
+                try (PreparedStatement pstmt2 = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where id_resource like ?")) {
 
                     pstmt2.setString(1, "'%" + rs1.getString("id_resource") + "%'");
                     rs2 = pstmt2.executeQuery();
-                    resources.add(new Resource(rs2.getString("id_resource"), rs2.getDate("created_at"), rs2.getString("resource_type"), rs2.getString("path"), rs2.getString("title"), rs2.getString("location")));
+                        resources.add(new Resource(rs2.getString("id_resource"), rs2.getString("id_user"), rs2.getString("title"), rs2.getString("path"), rs2.getString("resource_type"), rs2.getString("data_path"), rs2.getDate("created_at"), rs2.getString("location")));
                 }
             }
         }
@@ -61,11 +62,11 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                try (PreparedStatement pstmt2 = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where id_resource like ?")) {
+                try (PreparedStatement pstmt2 = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where id_resource like ?")) {
 
                     pstmt2.setString(1, "'%" + rs1.getString("id_resource") + "%'");
                     rs2 = pstmt2.executeQuery();
-                    resources.add(new Resource(rs2.getString("id_resource"), rs2.getDate("created_at"), rs2.getString("resource_type"), rs2.getString("path"), rs2.getString("title"), rs2.getString("location")));
+                        resources.add(new Resource(rs2.getString("id_resource"), rs2.getString("id_user"), rs2.getString("title"), rs2.getString("path"), rs2.getString("resource_type"), rs2.getString("data_path"), rs2.getDate("created_at"), rs2.getString("location")));
                 }
             }
         }
@@ -77,7 +78,7 @@ public class DatabaseController {
         Connection con = Database.getConnection();
 
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where date like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where date like ?")) {
 
             pstmt.setDate(1, date);
 
@@ -86,7 +87,7 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                 resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -98,7 +99,7 @@ public class DatabaseController {
         title = "'%" + title + "%'";
         title = title.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title))  like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where trim(lower(title))  like ?")) {
 
             pstmt.setString(1, title);
 
@@ -107,7 +108,7 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                 resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -119,7 +120,7 @@ public class DatabaseController {
         title = "'" + title + "'";
         title = title.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title)) like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where trim(lower(title)) like ?")) {
 
             pstmt.setString(1, title);
 
@@ -128,7 +129,7 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                 resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -140,7 +141,7 @@ public class DatabaseController {
         location = "'" + location + "'";
         location = location.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(location)) like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where trim(lower(location)) like ?")) {
 
             pstmt.setString(1, location);
 
@@ -149,7 +150,7 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                 resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -161,7 +162,7 @@ public class DatabaseController {
         location = "'%" + location + "%'";
         location = location.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(location)) like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where trim(lower(location)) like ?")) {
 
             pstmt.setString(1, location);
 
@@ -170,7 +171,7 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource());
             }
         }
 
@@ -181,7 +182,8 @@ public class DatabaseController {
         location = "'%" + location + "%'";
         location = location.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources"
+                + " where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
 
             pstmt.setString(1, title);
  pstmt.setString(2, tag);
@@ -192,7 +194,7 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"),rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"),rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -213,11 +215,11 @@ public class DatabaseController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                try (PreparedStatement pstmt2 = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where id_resource like ?")) {
+                try (PreparedStatement pstmt2 = con.prepareStatement("selectid_resource,created_at,resource_type,path,title,location,data_path,id_user from resources where id_resource like ?")) {
 
                     pstmt2.setString(1, "'%" + rs1.getString("id_resource") + "%'");
                     rs2 = pstmt2.executeQuery();
-                    resources.add(new Resource(rs2.getString("id_resource"), rs2.getDate("created_at"), rs2.getString("resource_type"), rs2.getString("path"), rs2.getString("title"), rs2.getString("location")));
+                        resources.add(new Resource(rs2.getString("id_resource"), rs2.getString("id_user"), rs2.getString("title"), rs2.getString("path"), rs2.getString("resource_type"), rs2.getString("data_path"), rs2.getDate("created_at"), rs2.getString("location")));
                 }
             }
         }
