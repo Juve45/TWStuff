@@ -5,6 +5,7 @@
  */
 package commons;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.persistence.Entity;
@@ -14,63 +15,114 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author alexandru
+ * @author ada
  */
 @Entity
 @XmlRootElement
 public class User {
     @Id
-    String fbId;
-    String picURL;
-    String name;
+    String id;
+    String username;
+    Date birthday;
+    String institution;
+    String facebookId;
+    String picUrl;
     transient HttpSession session = null;
-    //transient String sessionId;
+    transient String sessionId;
     transient String facebookSecret;
     
-    public User(String userName) {
-        name = userName;
-    }
-    
-    public User(String userName, String pic) {
-        name = userName;
-        picURL = pic;
+    public User(String username) {
+        this.username = username;
     }
 
-    
-    public User(String Id, String userName, String pic) {
-        fbId = Id;
-        name = userName;
-        picURL = pic;
+    public User(String id, String username, Date birthday, String institution, String facebookId, String picUrl, String sessionId, String facebookSecret) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.institution = institution;
+        this.facebookId = facebookId;
+        this.picUrl = picUrl;
+        this.sessionId = sessionId;
+        this.facebookSecret = facebookSecret;
     }
 
-    public String getName() {
-        return name;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setName(String userName) {
-        name = userName;
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public String getFacebookSecret() {
+        return facebookSecret;
+    }
+
+    public String getInstitution() {
+        return institution;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public HttpSession getSession() {
+        return session;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
+    public void setFacebookSecret(String facebookSecret) {
+        this.facebookSecret = facebookSecret;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setInstitution(String institution) {
+        this.institution = institution;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public void setSession(HttpSession session) {
+        this.session = session;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
     
-    public String getFbId()
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    public String getId()
     {
-        return fbId;
+        return id;
     }
     
     public void startSession()
     {
         
     }
-
-    public String getPicURL() {
-        return picURL;
-    }
-
-    public void setPicURL(String picURL) {
-        this.picURL = picURL;
-    }
-    
-    
-    
-    
     
 }
