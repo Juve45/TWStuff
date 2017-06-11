@@ -20,4 +20,10 @@ public class UserView {
         return json;
     }
     
+    public User fromView(String json)
+    {
+        Gson g = new Gson();
+        return g.fromJson(json, User.class);
+    }
+    
 }

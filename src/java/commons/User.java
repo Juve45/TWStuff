@@ -20,7 +20,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class User {
     @Id
-    Long id;
+    String id;
+    
     String username;
     transient HttpSession session = null;
     transient String sessionId;
@@ -38,7 +39,7 @@ public class User {
         this.username = username;
     }
     
-    public Long getId()
+    public String getId()
     {
         return id;
     }

@@ -181,8 +181,7 @@ public class DatabaseController {
         location = "'%" + location + "%'";
         location = location.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources"
-                + " where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
 
             pstmt.setString(1, title);
  pstmt.setString(2, tag);

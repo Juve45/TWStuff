@@ -83,7 +83,7 @@ public class PageController {
     /**
      * 
      * Function that resolves GET queries for user entity
-     * Returnes a JSON that contains information about the requested user.
+     * Returns a JSON that contains information about the requested user.
      * 
      * @param m - This models the params of the GET command
      * @param page

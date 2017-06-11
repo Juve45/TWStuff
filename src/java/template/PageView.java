@@ -58,11 +58,12 @@ public class PageView {
         Map root = new HashMap();
        
         System.out.println("Front end session in GetHomeView: " + hs.getId());
-        PostMethod pm = new PostMethod("http://localhost:8080/BackEndServer/API/user");
+        GetMethod pm = new GetMethod("http://localhost:8080/BackEndServer/API/user");
         NameValuePair[] body = new NameValuePair[1];
         System.out.println("session to send: " + PageController.sessionMap.get(hs.getId()));
         body[0] = new NameValuePair("session", PageController.sessionMap.get(hs.getId()));
         pm.setRequestBody(body);
+        
         
         HttpClient httpClient = new HttpClient();
         int resp = httpClient.executeMethod(pm);
