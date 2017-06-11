@@ -5,6 +5,7 @@
  */
 package database;
 
+import commons.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -18,17 +19,19 @@ import java.sql.Statement;
  */
 public class UserController {
 
-    public void addUser(String id_user, String name, String profile_image_url, Date birthday, String school, String session_id) throws SQLException {
+    public void addUser(User u) throws SQLException {
         Connection con = Database.getConnection();
         Statement st = con.createStatement();
-        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_user,name,profile_image_url,birthday,school,session_id)\n"
-                + "    VALUES (?,?,?,?,?,?);")) {
-            pstmt.setString(1, id_user);
-            pstmt.setString(2, name);
-            pstmt.setString(3, profile_image_url);
-            pstmt.setDate(4, birthday);
-            pstmt.setString(5, school);
-            pstmt.setString(6, session_id);
+        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_user,name,profile_image_url,birthday,school,session_id,facebook_secret,facebook_id)\n"
+                + "    VALUES (?,?,?,?,?,?,?,?);")) {
+            pstmt.setString(1, u.getId());
+            pstmt.setString(2,u.getUsername());
+            pstmt.setString(3, u.getPicUrl());
+            pstmt.setDate(4, u.getBirthday());
+            pstmt.setString(5, u.getInstitution());
+            pstmt.setString(6, u.getSessionId());
+            pstmt.setString(7, u.getFacebookSecret());
+            pstmt.setString(8, u.getFacebookId());
 
             pstmt.executeUpdate();
 
