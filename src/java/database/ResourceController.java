@@ -6,6 +6,7 @@
 package database;
 
 import com.sun.corba.se.spi.activation.LocatorOperations;
+import commons.Resource;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -20,15 +21,19 @@ import java.util.ArrayList;
  */
 public class ResourceController {
 
-    public void add_resource(Resource resource) throws SQLException {
+    public void addResource(Resource resource) throws SQLException {
         Connection con = Database.getConnection();
         Statement st = con.createStatement();
-        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id_resource,created_at, resource_type)\n"
-                + "    VALUES (?,?,?,?,?,?);")) {
-            pstmt.setString(1, resource.getIdResource());
-            pstmt.setDate(2, resource.getDateCreated());
-            pstmt.setString(3, resource.getResourceType());
-
+        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO resource (id_resource,created_at, resource_type,id_user,path,data_path,title,location)\n"
+                + "    VALUES (?,?,?,?,?,?,?,?);")) {
+            pstmt.setString(1, resource.getId());
+            pstmt.setDate(2, resource.getCreatedAt());
+            pstmt.setString(3, resource.getType());
+            pstmt.setString(4, resource.getIdUser());
+            pstmt.setString(5, resource.getPath());
+            pstmt.setString(6, resource.getDataPath());
+            pstmt.setString(7, resource.getName());           
+            pstmt.setString(8, resource.getLocation());
             pstmt.executeUpdate();
 
         }
@@ -51,7 +56,7 @@ public class ResourceController {
 
                     pstmt2.setString(1, "'%" + rs1.getString("id_resource") + "%'");
                     rs2 = pstmt2.executeQuery();
-                    resources.add(new Resource(rs2.getString("id_resource"), rs2.getDate("created_at"), rs2.getString("resource_type"), rs2.getString("path"), rs2.getString("title"), rs2.getString("location")));
+ resources.add(new Resource(rs2.getString("id_resource"), rs2.getString("id_user"), rs2.getString("title"), rs2.getString("path"), rs2.getString("resource_type"), rs2.getString("data_path"), rs2.getDate("created_at"), rs2.getString("location")));
                 }
             }
         }
@@ -81,7 +86,7 @@ public class ResourceController {
 
                     pstmt2.setString(1, "'%" + rs1.getString("id_resource") + "%'");
                     rs2 = pstmt2.executeQuery();
-                    resources.add(new Resource(rs2.getString("id_resource"), rs2.getDate("created_at"), rs2.getString("resource_type"), rs2.getString("path"), rs2.getString("title"), rs2.getString("location")));
+ resources.add(new Resource(rs2.getString("id_resource"), rs2.getString("id_user"), rs2.getString("title"), rs2.getString("path"), rs2.getString("resource_type"), rs2.getString("data_path"), rs2.getDate("created_at"), rs2.getString("location")));
                 }
             }
         }
@@ -102,7 +107,7 @@ public class ResourceController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -123,7 +128,7 @@ public class ResourceController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -144,7 +149,7 @@ public class ResourceController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -165,7 +170,7 @@ public class ResourceController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -186,7 +191,7 @@ public class ResourceController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
@@ -208,7 +213,7 @@ public class ResourceController {
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
-                resources.add(new Resource(rs1.getString("id_resource"), rs1.getDate("created_at"), rs1.getString("resource_type"), rs1.getString("path"), rs1.getString("title"), rs1.getString("location")));
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
             }
         }
 
