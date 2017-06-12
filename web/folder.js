@@ -75,7 +75,7 @@ $(function(){
     });
 });
 
-
+//this is the upload function
 $(function(){
     	
 //    var tmp = FileReader.readAsBinaryString($.get());
@@ -99,15 +99,22 @@ $(function(){
           }
 
   // Add the file to the request.
-  formData.append('a', file);
+  formData.append(file.name, file);
   break;
 }
 
-
+    $.get('http://localhost:8080/BackEndServer/page/getSession', function(response) {
+     tmp = response;
+             
     var request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:8080/BackEndServer/API/upload");
-    request.send(formData);
-       console.log(formData.name); 
+    request.open("POST", "http://localhost:8080/BackEndServer/API/upload?session="+tmp);
+                //console.log(tmp2+" am primit");
+                
+                request.send(formData);
+               console.log(formData.name); 
+                           
+		});
+
      // $("#main-row").append(tmp);
     });
 });

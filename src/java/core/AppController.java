@@ -213,23 +213,29 @@ public class AppController{
     
     @RequestMapping(value = "/upload", method = RequestMethod.POST)  
     public @ResponseBody String upload(HttpServletRequest request, MultipartHttpServletRequest mfile) throws IOException, SQLException { 
-        Enumeration <String> l = request.getHeaderNames();
+        /*Enumeration <String> l = request.getHeaderNames();
         while(l.hasMoreElements())
         {
             System.out.println("enum: " + l.nextElement());
-        }
+        }*/
         System.out.println(request.getHeader("content-type"));
-        
-        MultipartFile file = mfile.getFile("a");
-        
-        byte[] b = file.getBytes();
-        FileOutputStream fos = new FileOutputStream(new File("/home/alexandru/Documents/Fac/TW/BackEndServer/web/" + file.getName()+".png"));
-        fos.write(b);
-        fos.close();
-        String sesId = request.getParameter("session");
-        HttpSession s = SessionController.findSessionById(sesId);
-        Resource r = new Resource("10", SessionController.sessionUserId.get(s.getId()), file.getName(), "", "image", file.getName()+".png", new Date(30, 2, 2), "Iasi");
-        new ResourceController().addResource(r);
+        Map<String, MultipartFile> m = mfile.getFileMap();
+        for (Map.Entry<String, MultipartFile> entry : m.entrySet())
+        {
+            MultipartFile file = mfile.getFile(entry.getKey());
+            byte[] b = file.getBytes();
+            String fileName = file.getName();
+            System.out.println("full path: " + fileName);
+            fileName = fileName.replace(' ', '_');
+            String filePath = "/home/alexandru/Documents/Fac/TW/BackEndServer/web/" + fileName;
+            FileOutputStream fos = new FileOutputStream(new File(filePath));
+            fos.write(b);
+            fos.close();
+            String sesId = request.getParameter("session");
+            HttpSession s = SessionController.findSessionById(sesId);
+            Resource r = new Resource("10", SessionController.sessionUserId.get(s.getId()), fileName, "", "image", fileName, new Date(30, 2, 2), "Iasi");
+            new ResourceController().addResource(r);
+        }
         Iterator it = mfile.getFileNames();
         while(it.hasNext())
         System.out.println("M: " +it.next());

@@ -35,7 +35,7 @@ public class ResourceController {
             pstmt.setString(7, resource.getName());           
             pstmt.setString(8, resource.getLocation());
             pstmt.executeUpdate();
-
+            con.commit();
         }
     }
 
