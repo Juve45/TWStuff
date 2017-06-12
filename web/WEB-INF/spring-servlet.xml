@@ -11,4 +11,5 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     	<context:annotation-config />
 	<bean id="appController" class="core.AppController">
 	</bean>
+        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>  

@@ -1,6 +1,7 @@
 package core;  
 import com.google.gson.Gson;
 import commons.*;
+import database.ResourceController;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
@@ -12,29 +13,42 @@ import facebook4j.auth.AccessToken;
 import vimeo.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+import jdk.jfr.events.FileWriteEvent;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.*;
 import sun.misc.BASE64Encoder;
 import session.*;
 
 @RestController
-public class AppController {
-    
+public class AppController{
     
     /**
      * 
@@ -66,14 +80,8 @@ public class AppController {
      * @return A JSON with the data model of the specific user.
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)  
-    public @ResponseBody String resolveUser(HttpServletRequest request, @PathParam("session") String sesId) throws FacebookException { 
-        /*
-        System.out.println("USER POST ============================== ");
-        sesId = sesId.substring(8);
-        System.out.println(request.getRequestURI());
-        System.out.println("request session: " + request.getParameter("session"));
-        debug stuff
-        */
+    public @ResponseBody String resolveUser(HttpServletRequest request, @PathParam("session") String sesId) throws FacebookException, SQLException { 
+        
         sesId = request.getParameter("session");
         HttpSession s = SessionController.findSessionById(sesId);
         if(s == null) 
@@ -92,8 +100,13 @@ public class AppController {
         facebook4j.User me = fb.getMe();
         String userId = me.getId();
         
+        URL url =fb.getPictureURL();
         
-        
+        User u = new User(me.getId(), me.getName(), url.toString());
+  /*      
+        if(new database.UserController().getUser(userId) == null)
+            new database.UserController().addUser(u);
+*/        
         ResponseList<Photo> r = fb.getUploadedPhotos();
         System.out.println("Number of photos: " + r.size());
         for(Photo p : r)
@@ -104,9 +117,8 @@ public class AppController {
         System.out.println("A Token: " + aToken);
         System.out.println("user : " + me.getName());
         Picture pic = me.getPicture();
-        URL url =fb.getPictureURL();
         
-        return new UserView().getView(new User(me.getId(), me.getName(), url.toString()));
+        return new UserView().getView(u);
     }  
     
     /**
@@ -156,6 +168,7 @@ public class AppController {
             
             SessionController.activeSessions.put(sessionId, httpSession);
             SessionController.fbToken.put(httpSession.getId(), aToken);
+            SessionController.sessionUserId.put(httpSession.getId(), me.getId());
             System.out.println("A Token: " + aToken);
             System.out.println("user : " + me.getName());
             System.out.println("session generated in back-end: " + sessionId);
@@ -198,6 +211,31 @@ public class AppController {
         return "created session";
     }  
     
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)  
+    public @ResponseBody String upload(HttpServletRequest request, MultipartHttpServletRequest mfile) throws IOException, SQLException { 
+        Enumeration <String> l = request.getHeaderNames();
+        while(l.hasMoreElements())
+        {
+            System.out.println("enum: " + l.nextElement());
+        }
+        System.out.println(request.getHeader("content-type"));
+        
+        MultipartFile file = mfile.getFile("a");
+        
+        byte[] b = file.getBytes();
+        FileOutputStream fos = new FileOutputStream(new File("/home/alexandru/Documents/Fac/TW/BackEndServer/web/" + file.getName()+".png"));
+        fos.write(b);
+        fos.close();
+        String sesId = request.getParameter("session");
+        HttpSession s = SessionController.findSessionById(sesId);
+        Resource r = new Resource("10", SessionController.sessionUserId.get(s.getId()), file.getName(), "", "image", file.getName()+".png", new Date(30, 2, 2), "Iasi");
+        new ResourceController().addResource(r);
+        Iterator it = mfile.getFileNames();
+        while(it.hasNext())
+        System.out.println("M: " +it.next());
+        return "created session";
+    }  
+    
     
     
     @RequestMapping(value="/API/{userId}", method={RequestMethod.POST, RequestMethod.GET})
@@ -207,14 +245,12 @@ public class AppController {
             return new UserController().getViewAsString(userId);
     }
     
-    
-    @RequestMapping("/hello")  
-    public ModelAndView helloWorld() {  
-        String message = "<h5>HELLO SPRING MVC HOW R U</h5>";  
-        System.out.println("asdfsd");
+    @RequestMapping(value="/hello", method={RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String asd(){
         
-        return new ModelAndView("hellopage", "message", message);  
-    }  
+            return "ASDasdasd asd";
+    }
     
     
     @RequestMapping("/init")  

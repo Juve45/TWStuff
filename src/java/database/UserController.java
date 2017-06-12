@@ -32,10 +32,16 @@ public class UserController {
             pstmt.setString(6, u.getSessionId());
             pstmt.setString(7, u.getFacebookSecret());
             pstmt.setString(8, u.getFacebookId());
-
-            pstmt.executeUpdate();
+            System.out.println(pstmt.toString());
+            pstmt.execute();
+            //pstmt.executeUpdate();
 
         }
+    }
+    
+    public User getUser(String fbId)
+    {
+        return null;
     }
 
 }

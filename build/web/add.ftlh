@@ -17,10 +17,31 @@
 $(function() {
 
   $(document).on('change', ':file', function() {
+      
     var input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        console.log("sth:" + input.get(0).value);
     input.trigger('fileselect', [numFiles, label]);
+    console.log(label);
+        /*
+    var input = document.getElementById("browse");
+    var fReader = new FileReader();
+    fReader.readAsDataURL(input.files[0]);
+    fReader.onloadend = function(event){
+    var img = document.getElementById("yourImgTag");
+
+    img.src = event.target.result;
+    console.log("try: "+img.src);
+    }*/
+    console.log('Am trimis!!!');
+    //var form = document.getElementById('file-form');
+    var fileSelect = document.getElementById('browse')
+    // Get the selected files from the input.
+    var files = fileSelect.files;;
+    console.log(files);
+    var uploadButton = document.getElementById('upload-button');
+    
   });
 
 
@@ -63,7 +84,7 @@ $(function() {
               <div class="input-group col-sm-10 col-sm-offset-1">
                 <label class="input-group-btn">
                     <span class="btn btn-primary">
-                        Browse&hellip; <input type="file" style="display: none;" multiple>
+                        Browse&hellip; <input id="browse" type="file" name="a" style="display: none;" >
                     </span>
                 </label>
                 <input type="text" class="form-control" readonly>
@@ -113,7 +134,7 @@ $(function() {
 
             <div class="row">
             <br>
-        <center><button type="button" class="btn btn-info">Upload</button></center>
+        <center><button type="button" class="btn btn-info" id="upload-btn">Upload</button></center>
         </div>
         <br>
         

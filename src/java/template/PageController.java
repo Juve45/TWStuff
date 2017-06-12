@@ -2,6 +2,7 @@ package template;
 
 import freemarker.template.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.http.*;
 import org.springframework.ui.*;
@@ -19,7 +20,7 @@ public class PageController {
      * 
      */
     @RequestMapping(value = {"/home/**"}, method = RequestMethod.GET)
-    public @ResponseBody String resolveUserGet(HttpServletRequest request) throws IOException, TemplateException { 
+    public @ResponseBody String resolveUserGet(HttpServletRequest request) throws IOException, TemplateException, MalformedTemplateNameException, SQLException { 
         
         HttpSession mySession = SessionController.session(false);
         System.out.println("this is my session:" + mySession.getId());
@@ -51,7 +52,7 @@ public class PageController {
      * 
      */
     @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-    public @ResponseBody String resolveUserGet(Model m) throws IOException, TemplateException { 
+    public @ResponseBody String resolveUserGet(Model m) throws IOException, TemplateException, MalformedTemplateNameException, SQLException { 
         
         HttpSession mySession = SessionController.session(false);
         //System.out.println("this is my session:" + mySession.getId());
@@ -64,6 +65,24 @@ public class PageController {
         System.err.println("Am ajuns la Metoda!!!");
         
         return PageView.getHomeView("/BackEndServer/page/home");
+    }
+    
+    /**
+     * TODO
+     * 
+     */
+    @RequestMapping(value = {"/getSession"}, method = RequestMethod.GET)
+    public @ResponseBody String resolveSession(Model m) throws IOException, TemplateException { 
+        
+        HttpSession mySession = SessionController.session(false);
+        //System.out.println("this is my session:" + mySession.getId());
+        if(mySession == null)
+        {
+            System.out.println("hmm??");
+            return "Not Authorized";
+        }
+        
+        return mySession.getId();
     }
     
     /**
@@ -142,7 +161,7 @@ public class PageController {
      * 
      */
     @RequestMapping(value = {"/session"}, method = RequestMethod.POST)
-    public @ResponseBody String startSession(HttpServletRequest request, @RequestParam("session") String ses) throws IOException, TemplateException { 
+    public @ResponseBody String startSession(HttpServletRequest request, @RequestParam("session") String ses) throws IOException, TemplateException, MalformedTemplateNameException, SQLException { 
         
         System.out.println("I am in page/session ================================ ");
         HttpSession mySession = SessionController.session(true);

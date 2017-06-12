@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class SessionController {
     public static HashMap<String, HttpSession> activeSessions = new HashMap<>();
     public static HashMap<String, String> fbToken = new HashMap<>();
+    public static HashMap<String, String> sessionUserId = new HashMap<>();
     
     /**
      * If there is no active session for the specified ID, then the method 

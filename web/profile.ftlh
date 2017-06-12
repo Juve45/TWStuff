@@ -25,7 +25,7 @@
                     <h3 class="panel-title text-center">My Profile</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="media"> <img alt="Salut" src="${user.picURL}" class="img-responsive center-block"  style="width:150px"> </div>
+                    <div class="media"> <img alt="Salut" src="${user.picUrl}" class="img-responsive center-block"  style="width:150px"> </div>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
         <div class = "col-sm-8 col-xs-5">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    ${user.name}
+                    ${user.username}
                 </div>
             </div>
             <div class="panel panel-default">
@@ -44,7 +44,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    ${user.fbId}
+                    ${user.facebookId}
                 </div>
             </div>
 

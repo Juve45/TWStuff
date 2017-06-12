@@ -19,6 +19,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class PageView {
             return null;
         User x = new Gson().fromJson(msg, User.class);
         This.put("user", x);
+        This.put("userId", x.getId());
         //System.out.println("Pic: " + x.getPicURL());
         return This;
     }
@@ -88,7 +90,7 @@ public class PageView {
      * @throws MalformedTemplateNameException
      * @throws TemplateException 
      */
-    static String getHomeView(String path) throws IOException, MalformedTemplateNameException, TemplateException
+    static String getHomeView(String path) throws IOException, MalformedTemplateNameException, TemplateException, SQLException
     {
         System.out.println("HOME PAGE VIEW ===================== ");
         Configuration cfg;
@@ -112,8 +114,9 @@ public class PageView {
         }
         root.put("navItem", navItem);
         
-        ArrayList<Resource> str = init(), str2 = new ArrayList<>();
-        
+        //ArrayList<Resource> str = init(), str2 = new ArrayList<>();
+        ArrayList<Resource> str = new database.ResourceController().getResourcesByUserAndPath((String) root.get("userId"), path),
+                str2 = new ArrayList<>();
         for(Resource rs : str)
         {
             if(path.equals("/BackEndServer/page/home"+rs.getPath()))

@@ -46,6 +46,16 @@ public class User {
         this.facebookSecret = facebookSecret;
     }
 
+    public User(String fbId, String uName, String pic) {
+        facebookId = fbId;
+        id = facebookId;
+        username = uName;
+        picUrl = pic;
+        facebookSecret = "";
+    }
+    
+    
+    
     public Date getBirthday() {
         return birthday;
     }

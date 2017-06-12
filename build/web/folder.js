@@ -74,21 +74,65 @@ $(function(){
       $("#main-row").append(tmp);
     });
 });
-/*
-//adauga elemente pe pagina de la advandced search
+
+
 $(function(){
     	
-    $('body').on('click', '#search-btn', function(){
-      $("#main-row-search").load("home.html");
+//    var tmp = FileReader.readAsBinaryString($.get());
+
+    $('body').on('click', '#upload-btn', function(){
+        
+        var fileSelect = document.getElementById('browse')
+        // Get the selected files from the input.
+        var files = fileSelect.files;;
+        console.log(files);
+        var uploadButton = document.getElementById('upload-button');
+        // Create a new FormData object.
+        var formData = new FormData();
+        // Loop through each of the selected files.
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+
+          // Check the file type.
+          if (!file.type.match('image.*')) {
+            continue;
+          }
+
+  // Add the file to the request.
+  formData.append('a', file);
+  break;
+}
+
+
+    var request = new XMLHttpRequest();
+    request.open("POST", "http://localhost:8080/BackEndServer/API/upload");
+    request.send(formData);
+       console.log(formData.name); 
+     // $("#main-row").append(tmp);
     });
 });
 
-*/
+//adauga elemente pe pagina de la advandced search
 
-function loadSearch() {
-      $("#main-row-search").load("home.html");
-}
+$(function(){
+    	
+    var tmp = "";
+    
+    var tmp2 = "";
+    
+    $.get('http://localhost:8080/BackEndServer/page/getSession', function(response) {
+     tmp = response;
+             $.get('http://localhost:8080/BackEndServer/API/user?session='+tmp, function(response) {
+                tmp2 = response;
+                console.log(tmp2+" am primit");
+                           });
+		});
 
+    $('body').on('click', '#sch-btn', function(){
+      $("#main-row-search").append(tmp);
+      //console.log('go go goooo!');
+    });
+});
 
 
 // Pnetru orice element dintr-o lista (meniu) incarc pagina aratata de acel element, daca exista

@@ -24,7 +24,7 @@ public class ResourceController {
     public void addResource(Resource resource) throws SQLException {
         Connection con = Database.getConnection();
         Statement st = con.createStatement();
-        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO resource (id_resource,created_at, resource_type,id_user,path,data_path,title,location)\n"
+        try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO resources (id_resource,created_at, resource_type,id_user,path,data_path,title,location)\n"
                 + "    VALUES (?,?,?,?,?,?,?,?);")) {
             pstmt.setString(1, resource.getId());
             pstmt.setDate(2, resource.getCreatedAt());
@@ -202,7 +202,12 @@ public class ResourceController {
         location = "'%" + location + "%'";
         location = location.toLowerCase();
         ArrayList<Resource> resources = new ArrayList<>(100);
-        try (PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
+        try (
+                //PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
+                PreparedStatement pstmt = con.prepareStatement("select id_resource,"
+                        + "created_at,resorce_type,path,title,location from resources "
+                        + "where trim(lower(title)) like ? and trim(lower(tag)) like ? "
+                        + "and trim(lower(location)) like ? and created_at like ?")) {
 
             pstmt.setString(1, title);
  pstmt.setString(2, tag);
@@ -210,6 +215,28 @@ public class ResourceController {
   pstmt.setDate(4,date);
             ResultSet rs1;
             rs1 = null;
+            rs1 = pstmt.executeQuery();
+            while (rs1.next()) {
+
+                resources.add(new Resource(rs1.getString("id_resource"), rs1.getString("id_user"), rs1.getString("title"), rs1.getString("path"), rs1.getString("resource_type"), rs1.getString("data_path"), rs1.getDate("created_at"), rs1.getString("location")));
+            }
+        }
+
+        return resources;
+    }
+     
+      public ArrayList<Resource> getResourcesByUserAndPath(String userId, String path) throws SQLException {
+        Connection con = Database.getConnection();
+        ArrayList<Resource> resources = new ArrayList<>(100);
+        try (
+                //PreparedStatement pstmt = con.prepareStatement("select id_resource,created_at,resorce_type,path,title,location from resources where trim(lower(title)) like ? and trim(lower(tag)) like ? and trim(lower(location)) like ? and created_at like ?")) {
+                PreparedStatement pstmt = con.prepareStatement("select * from resources "
+                        + "where id_user = ?")) {
+
+            pstmt.setString(1, userId);
+            ResultSet rs1;
+            System.out.println("sql: " + pstmt.toString());
+            //rs1 = null;
             rs1 = pstmt.executeQuery();
             while (rs1.next()) {
 
